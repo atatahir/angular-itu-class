@@ -28,7 +28,61 @@ describe('basic types', () => {
         const n3: number = -Infinity;
         const n2: number = Infinity;
     })
+
+    it('should talk about string', () => {
+        const newString = new String('some string'); //using new keywords
+
+        //using literal
+        const singleQuote: string = 'some text'; 
+        const doubleQuote: string = "some text";
+
+        const trueName: string = 'template literals';
+
+        //template literals using backticks
+        const format: string = `it support
+            multiple lines ${trueName}, and suuporting string interpolation`;
+
+        const checkThisOut: string = `we can do math too like 1+1 = ${1+1}. 
+            We can also camnn a function like ${getName()}`;
+        console.log(checkThisOut);
+
+        //concatenating a string is string w/ +
+        const student: string = 'person 1';
+        const action: string = 'did something'
+        const sentence: string = student + ' ' + action;
+
+        // string is iterable
+        let person: string = 'Leto'
+        expect(person[0]).toBe('L');
+
+        expect(person.includes('L')).toBeTruthy();
+        expect(person.indexOf('t')).toBe(2);
+        expect(person.indexOf('m')).toBe(-1);
+    })
+
+    it('should talk about arrays', () => {
+        const movies: string[] = ['Dune', 'Martian'];
+        //List items does not have to be of the same type
+        const moviesMultipleTypes = ['Dune', 'Martian', true, 1000];
+        //const movies: string[] = ['Dune', 'Martian', true, 1000]; This will not be allowed becasue we are specifying a type
+        //any type
+        const moviesAny: any[] = ['Dune', 'Martian', true, 1000];  //should avoid using this
+        const newMovies = [];
+        newMovies[0] = 'Quite II';  //Can add to const lists, but should avoid using this
+        //newMovies = movies will not work because they are const
+
+        const moreMovies: string[] = new Array<string>(); //not used much
+
+        const sentence = 'after this we will go to lunch to watch ' + movies[1];
+        expect(sentence).toBe('after this we will go to lunch to watch Martian');
+
+        //array will return 'undefined' instead for index out of range error
+
+    })
 })
-     
+
+function getName() {
+    return ' Do you see it'
+}
 
 })
