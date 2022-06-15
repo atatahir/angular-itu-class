@@ -11,4 +11,19 @@
   <li *ngFor="let detail of inventorDetails">{{ detail }} I can type here</li>
 </ul>
   
+<div>
+  {{secondCounter$ | async}}
+</div>
+
+<div>
+  {{isEven$ | async}}
+</div>
+
+<div>
+  {{isOdd$ | async}}
+</div>
+
+<div>
+  {{notdivisibleBy5$ | async}}
+</div>
 </div>

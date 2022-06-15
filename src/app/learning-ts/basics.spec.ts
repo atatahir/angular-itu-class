@@ -1,3 +1,5 @@
+import { Inventor } from "../components/experiment/utils";
+
 describe('Variables and data types', () => {
     it('should declare a variable', () => {
         //var name; do not use the var as it does have scoping issues
@@ -221,13 +223,118 @@ describe('basic types', () => {
             })
 
             it('Is an arrow function', () => {
-              const add =  ((num1:number, num2: number) => {
+              const addV1 =  ((num1:number, num2: number): number => {
                     return num1 + num2;
                 })
+
+                const addV2 =  (num1:number, num2: number): number =>  num1 + num2; //implicit return because we do not have curly brackets. Only works with a single statement
             })
         })
 
     })
+
+    describe('destructuring', () => {
+        describe('object destructuring', () => {
+            const inventor: Inventor = {first: 'Albert', last: 'Einstein', year: 1879, passed: 1955};
+            const inventorv2: Inventor & {id: number}= {first: 'Albert', last: 'Einstein', year: 1879, passed: 1955, id: 1234};  //adding an additional property
+            it('how would you do this', () => {
+                
+                //extract this property into its own variable
+                const firstName = inventor.first; //normal method  ,
+            })
+            it('use object destructuring', () => {
+                const {first, last, year, passed} = inventor;
+                expect(first).toBe('Albert');
+            })
+            it('use object destructuring with renaming', () => {
+                const {first, last, year: birthYear, passed} = inventor;
+                expect(birthYear).toBe(1879);
+            })
+            it('use object destructuring with renaming', () => {
+                const {id: ssn} = inventorv2;
+                expect(ssn).toBe(1234);
+            })
+            it('should create an object literal describing something', () => {
+                const dog = {
+                    name: 'Spot',
+                    sound: 'woof woof',
+                    superPower: 'Sense of smell',
+                    age: 10,
+    
+                }
+    
+                const {name, sound: bark, superPower, age} = dog;
+                expect(bark).toBe('woof woof');
+            })
+
+        })
+        
+        describe('array destructuring', () => {
+            const movies = ['Dune', 'It', 'Martian'];
+            //extracting element normal way
+            const moviev1 = movies[0];
+            it('use array destructuring', () => {
+                const [movie1, ,movie3] = movies    //skipping second element
+                expect(movie3).toBe('Martian');
+            })
+
+        })
+
+        describe('named param destructuring', () => {
+            const dog = {
+                name: 'Spot',
+                sound: 'woof woof',
+                superPower: 'Sense of smell',
+                age: 10,
+
+            }
+
+            function whoIsMyBestFriend(name:string, age:number) {
+                return `${name} is my best friend and is ${age} years old`;
+            }
+        })
+    })
+
+    describe('rest and spread', () => {
+        describe('spread', () => {
+            //spread the content of this array or object accross the new array or object
+            it('spread', () => {
+                let dog: any = {
+                    name: 'Spot',
+                    sound: 'woof woof',
+                    superPower: 'Sense of smell',
+                    age: 10,
+                }
+
+
+                const deepCopyOfDogWithColor = {     //This is a deep copy
+                    ...dog, 
+                    color: []
+                }
+
+                expect(deepCopyOfDogWithColor.name).toBe('Spot');
+
+                const deepcopy = {
+                    ...dog
+                }
+
+                const overrideDog = {
+                    ...dog,
+                    age: 11
+                }
+                expect(dog.age).toBe(10);
+                expect(overrideDog.age).toBe(11);
+
+            })
+        })
+
+        describe('rest', () => {
+            function addNumbers(num1: number, num2:number, ...otherNumbers: number[]): number { //similar to params in c#
+                return num1 + num2;
+            }
+        })
+    })
+
 })
 
 function getName() {
