@@ -78,6 +78,155 @@ describe('basic types', () => {
 
         //array will return 'undefined' instead for index out of range error
 
+        function makeSentence(name: string) {
+            console.log(name + ' has watched the movie');
+        }
+
+        //foreach
+        movies.forEach(makeSentence); //notice that a function can be passed as an argument
+
+        movies.forEach((name) => {makeSentence(name)}); 
+
+        //map
+        //transform each and returns
+
+        const testScores = [90, 98, 48, 87, 57];
+        const modifiedScores = testScores.map(function(score: number) {
+            return score + 10;
+        });
+        expect(testScores[0]).toBe(90);
+        expect(modifiedScores[0]).toBe(100);
+
+        const drivers = [
+            {
+                firstName: 'Ata',
+                lastName: 'Tahir'
+            },
+            {
+                firstName: 'Azam',
+                lastName: 'Saud'
+            }
+        ]
+
+        const fullNameofDrivers: string[] = drivers.map(driver => {
+            return driver.firstName + ' ' + driver.lastName;
+        })
+
+        expect(fullNameofDrivers[0]).toBe('Ata Tahir');
+        expect(fullNameofDrivers[1]).toBe('Azam Saud');
+    })
+
+    it('should talk about objects', () => {
+        //this is typically not used
+        class Cat {
+            name: string =  'Jonty';
+            sound() {
+                console.log('meow')
+            }
+        }
+
+        const myCat = new Cat();
+        const colors: string[] = ['black', 'orange'];
+        
+
+        interface Animal {
+            name:string,
+            sound:string,
+            superPower:string,
+            age:number,
+            colors: string[]
+        }
+        //using objects to describe data
+        const dog: Animal = {
+            name: 'Spot',
+            sound: 'woof woof',
+            superPower: 'Sense of smell',
+            age: 10,
+            colors //do not need to specify value for variable with same name. This will not work if variabke name was not 'colors'
+        }
+
+        let prop = 'org';
+        expect(dog.name).toBe('Spot');
+        expect(dog.sound).toBe('woof woof');
+        expect(dog['superPower']).toBe('Sense of smell');
+        expect(dog.age).toBe(10);
+    })
+
+    it('should talk about booleans', () => {
+        let isDayTwo = true;
+        const hasLab = false;   
+        let whatIsDefault;
+        let cat = 'Jonty'
+
+        expect(cat).toBeTruthy();
+        expect(isDayTwo).toBeTruthy();
+        expect(whatIsDefault).toBeFalsy();
+    })
+
+    it('typing, interfaces, type aliases', () => {
+        let someNum: number;
+        let someString: string;
+        let someArray: any[];
+        let cat: (Cat1 | Cat2 | Cat3); //this can also be written as 
+        // type Cat[] = Cat1 | Cat2 | Cat3;
+
+        // const myCats: Cat[] = {[]};
+
+        interface Cat1 {
+            name: string,
+            age: number,
+            breed: string,
+            color: string,
+            sex: string
+            ownerName?: string,
+            isVaccinated: boolean
+        }
+
+        
+        interface Cat2 {
+            name: string,
+            age: number,
+            breed: string,
+            color: string[],
+            sex: string
+            ownerName?: string,
+            isVaccinated: boolean
+        }
+
+                
+        interface Cat3 {
+            name: string,
+            age: number,
+            breed: string[],
+            color: string[],
+        }
+    })
+
+    describe('functions', () => {
+        it('should describe named function declarations', () => {
+            addNumbers(10, 5);  //Here called arguments
+            function addNumbers(num1: number, num2: number, ) : number { // Here called parameters. There is also no need to add function. Need to specify type for params and return value
+                return num1+num2;
+            }
+        })
+        
+        describe('should describe anonymous function express', () => {
+            it('Not an arrow function', () => {
+                //add(10, 5) this will not work as this needs to be after we assign the add
+                type mathFunction = (num1:number, num2: number) => number; 
+                const add: mathFunction = function addNumbers(num1: number, num2:number, ) { // named anonymous function
+                    return num1+num2;
+                }
+                expect(add(10, 5)).toBe(15);
+            })
+
+            it('Is an arrow function', () => {
+              const add =  ((num1:number, num2: number) => {
+                    return num1 + num2;
+                })
+            })
+        })
+
     })
 })
 
